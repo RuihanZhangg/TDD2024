@@ -18,7 +18,7 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://localhost:8000')
 
         self.assertIn('To-Do', self.browser.title)
-        header_test = self.browser.find_element(By.TAG_NAME,'h1').test
+        header_test = self.browser.find_element(By.TAG_NAME,'h1').text
         self.assertIn('To-Do',header_test)
 
         inputbox = self.browser.find_element(By.ID,'id_new_item')
@@ -29,12 +29,12 @@ class NewVisitorTest(unittest.TestCase):
 
         inputbox.send_keys('Buy flowers')
 
-        inputbox.sned_keys(Keys.ENTER)
+        inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
 
         table = self.browser.find_element(By.ID, 'id_list_table')
         rows = table.find_elements(By.TAG_NAME, 'tr')
-        self.asserIn('1: Buy flowers', [row.text for row in rows])
+        self.assertIn('1: Buy flowers', [row.text for row in rows])
 
         self.fail('Finish the test!')
 
