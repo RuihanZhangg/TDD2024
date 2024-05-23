@@ -48,7 +48,7 @@ class HomePageTest(TestCase):
     def test_redirects_after_POST(self):
         response = self.client.post('/', data={'item_text': 'A new list item'})
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/')
+        self.assertEqual(response['location'], '/lists/the-new-page/')
     
     def test_only_saves_items_when_necessary(self):
         self.client.get('/')
@@ -65,6 +65,15 @@ class HomePageTest(TestCase):
         self.assertTrue(html.startswith('<html>'))
         self.assertIn('<title>To-Do lists</title>', html)
         self.assertTrue(html.endswith('</html>'))
+
+class ListViewTest(TestCase):
+    
+    def test_dispalys_all_list_items(self):
+        Item.objects.create(text='itemey 1')
+        Item.objects.create(text='itemey 2')
+        response = self.client.get('/lists/the-new-page/')
+        self.assertContains(response, 'itemey 1')
+        self.assertContains(response, 'itemey 2')
 
 # # Create your tests here.
 # class SmokeTest(TestCase):

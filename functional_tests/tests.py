@@ -62,8 +62,36 @@ class NewVisitorTest(LiveServerTestCase):
         self.wait_for_row_in_list_table('2: Give a gift to Lisi')
         
         
-        self.fail('Finish the test!')
+    def test_multiple_users_can_start_lists_at_different_urls(self):
+        #新建代办清单
+        self.browser.get(self.live_server_url)
+        inputbox = self.browser.find_element(By.ID,'id_new_item')
+        inputbox.send_keys('Buy flowers')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: Buy flowers')
+        #清单独立，有唯一url
+        zhangsan_list_url = self.browser.current_url
+        self.assertRegex(zhangsan_list_url, '/lists/.+')
+        #新用户
+        self.browser.quit()
+        self.browser = webdriver.Chrome()
+        #看不到之前的清单
+        self.browser.get(self.live_server_url)
+        page_text = self.browser.find_element(By.TAG_NAME, 'body').text
+        self.assertNotIn('Buy flowers', page_text)
+        self.assertNotIn('Give a gift to Lisi', page_text)
 
+        inputbox = self.browser.find_element(By.ID,'id_new_item')
+        inputbox.send_keys('Buy milk')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: Buy milk')
 
+        wangwu_list_url = self.browser.current_url
+        self.assertRegex(wangwu_list_url, '/lists/.+')
+        self.assertNotEqual(wangwu_list_url, zhangsan_list_url)
+
+        page_text = self.browser.find_element(By.TAG_NAME, 'body').text
+        self.assertNotIn('Buy flowers', page_text)
+        self.assertNotIn('Buy milk', page_text)
 
 # assert 'Django' in browser.page_source
