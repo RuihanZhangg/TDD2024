@@ -92,10 +92,10 @@ class ListViewTest(TestCase):
         self.assertNotContains(response, 'other list item 2')
 
 
-    def test_dispalys_all_list_items(self):
-        list_user = List.objects.create()
-        Item.objects.create(text='itemey 1', list=list_user)
-        Item.objects.create(text='itemey 2', list=list_user)
+    # def test_dispalys_all_list_items(self):
+    #     list_user = List.objects.create()
+    #     Item.objects.create(text='itemey 1', list=list_user)
+    #     Item.objects.create(text='itemey 2', list=list_user)
         # response = self.client.get('/lists/the-new-page/')
         # self.assertContains(response, 'itemey 1')
         # self.assertContains(response, 'itemey 2')
