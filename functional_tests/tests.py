@@ -36,7 +36,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
     def test_can_start_a_list_and_retrieve_it_later(self):
 
         self.browser.get(self.live_server_url)
-
+        time.sleep(10)
         self.assertIn('To-Do', self.browser.title)
         header_test = self.browser.find_element(By.TAG_NAME,'h1').text
         self.assertIn('To-Do',header_test)
@@ -62,7 +62,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         self.wait_for_row_in_list_table('1: Buy flowers')
         self.wait_for_row_in_list_table('2: Give a gift to Lisi')
-        time.sleep(10)
+        
         
     def test_multiple_users_can_start_lists_at_different_urls(self):
         #新建代办清单
