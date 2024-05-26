@@ -62,7 +62,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
         self.wait_for_row_in_list_table('1: Buy flowers')
         self.wait_for_row_in_list_table('2: Give a gift to Lisi')
-        
+        time.sleep(10)
         
     def test_multiple_users_can_start_lists_at_different_urls(self):
         #新建代办清单
